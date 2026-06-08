@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="18" fill="#1a1a2e"/>
+  <!-- mini chessboard 4x4 -->
+  <rect x="8"  y="8"  width="20" height="20" fill="#f0d9b5" rx="2"/>
+  <rect x="28" y="8"  width="20" height="20" fill="#b58863" rx="2"/>
+  <rect x="48" y="8"  width="20" height="20" fill="#f0d9b5" rx="2"/>
+  <rect x="68" y="8"  width="20" height="20" fill="#b58863" rx="2"/>
+  <rect x="8"  y="28" width="20" height="20" fill="#b58863" rx="2"/>
+  <rect x="28" y="28" width="20" height="20" fill="#f0d9b5" rx="2"/>
+  <rect x="48" y="28" width="20" height="20" fill="#b58863" rx="2"/>
+  <rect x="68" y="28" width="20" height="20" fill="#f0d9b5" rx="2"/>
+  <!-- king piece -->
+  <text x="50" y="92" text-anchor="middle" font-size="56" font-family="serif" fill="#e9a84c">♚</text>
+</svg>

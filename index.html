@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Chess Xperia">
+  <title>Chess Xperia</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────────────── -->
+  <header>
+    <h1>♟ Chess Xperia</h1>
+    <div id="status">Tour des Blancs</div>
+  </header>
+
+  <!-- ── Board + coords ─────────────────────────────────────────────── -->
+  <div id="board-wrap">
+    <!-- Rank labels left -->
+    <div class="coords-col">
+      <span class="coord-label coord-rank"></span>
+      <span class="coord-label coord-rank"></span>
+      <span class="coord-label coord-rank"></span>
+      <span class="coord-label coord-rank"></span>
+      <span class="coord-label coord-rank"></span>
+      <span class="coord-label coord-rank"></span>
+      <span class="coord-label coord-rank"></span>
+      <span class="coord-label coord-rank"></span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:2px;">
+      <!-- Progress bar (AI thinking) -->
+      <div id="thinking-bar"></div>
+
+      <!-- Chess board -->
+      <div id="board"></div>
+
+      <!-- File labels bottom -->
+      <div class="coords-row">
+        <span class="coord-label coord-file"></span>
+        <span class="coord-label coord-file"></span>
+        <span class="coord-label coord-file"></span>
+        <span class="coord-label coord-file"></span>
+        <span class="coord-label coord-file"></span>
+        <span class="coord-label coord-file"></span>
+        <span class="coord-label coord-file"></span>
+        <span class="coord-label coord-file"></span>
+      </div>
+    </div>
+
+    <!-- Rank labels right (empty spacer for symmetry) -->
+    <div class="coords-col" style="visibility:hidden" aria-hidden="true">
+      <span class="coord-label"></span>
+      <span class="coord-label"></span>
+      <span class="coord-label"></span>
+      <span class="coord-label"></span>
+      <span class="coord-label"></span>
+      <span class="coord-label"></span>
+      <span class="coord-label"></span>
+      <span class="coord-label"></span>
+    </div>
+  </div>
+
+  <!-- ── Info panel ──────────────────────────────────────────────────── -->
+  <div id="info-panel">
+    <!-- Captured pieces -->
+    <div id="captured-wrap">
+      <div class="captured-row">
+        <span class="captured-label">♟</span>
+        <span id="captured-white" class="captured-pieces"></span>
+        <span id="diff-black" class="material-diff"></span>
+      </div>
+      <div class="captured-row">
+        <span class="captured-label">♙</span>
+        <span id="captured-black" class="captured-pieces"></span>
+        <span id="diff-white" class="material-diff"></span>
+      </div>
+    </div>
+
+    <!-- Move history -->
+    <div id="moves-list" role="log" aria-label="Historique des coups"></div>
+  </div>
+
+  <!-- ── Controls ────────────────────────────────────────────────────── -->
+  <div id="controls">
+    <div class="btn-row">
+      <button id="btn-new"  class="primary">Nouvelle partie</button>
+      <button id="btn-undo">Annuler ↩</button>
+      <button id="btn-flip">Retourner ⇅</button>
+    </div>
+    <div class="btn-row">
+      <button id="btn-mode">vs IA</button>
+      <button id="btn-side">Jouer Noirs</button>
+      <div id="diff-row">
+        <label for="diff-select">Niveau</label>
+        <select id="diff-select" aria-label="Niveau de difficulté">
+          <option value="2">Facile</option>
+          <option value="3" selected>Moyen</option>
+          <option value="4">Difficile</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Promotion dialog ────────────────────────────────────────────── -->
+  <div id="promo-overlay" role="dialog" aria-label="Promotion du pion" aria-modal="true">
+    <div id="promo-box">
+      <h3>Choisissez une pièce</h3>
+      <div id="promo-choices"></div>
+    </div>
+  </div>
+
+  <!-- ── Game over overlay ───────────────────────────────────────────── -->
+  <div id="gameover-overlay" role="dialog" aria-label="Fin de partie" aria-modal="true">
+    <div id="gameover-box">
+      <div id="gameover-icon">♟</div>
+      <div id="gameover-title">Partie terminée</div>
+      <div id="gameover-sub"></div>
+      <button id="btn-play-again" class="primary" style="margin-top:0">Rejouer</button>
+    </div>
+  </div>
+
+  <script src="js/engine.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
