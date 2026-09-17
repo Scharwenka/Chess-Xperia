@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Deux formes d'onde decalees : le sujet de l'application. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#6ED3FF"
+        android:pathData="M30,38h3v14h-3z M36,30h3v30h-3z M42,36h3v18h-3z M48,26h3v38h-3z M54,40h3v10h-3z M60,32h3v26h-3z M66,37h3v16h-3z M72,34h3v22h-3z" />
+    <path
+        android:fillColor="#FFB86C"
+        android:pathData="M36,62h3v10h-3z M42,58h3v18h-3z M48,64h3v6h-3z M54,54h3v26h-3z M60,60h3v14h-3z M66,57h3v20h-3z M72,62h3v10h-3z M78,59h3v16h-3z" />
+</vector>

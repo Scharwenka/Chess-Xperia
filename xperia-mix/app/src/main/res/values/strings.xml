@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">XperiaMix</string>
+
+    <string name="track_a">Piste A</string>
+    <string name="track_b">Piste B</string>
+    <string name="load_track">Charger</string>
+    <string name="play">Lecture</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="mute">Mute</string>
+    <string name="solo">Solo</string>
+    <string name="gain">Gain</string>
+    <string name="offset">Decalage</string>
+    <string name="auto_align">Calage auto</string>
+    <string name="reset_offset">Remettre a zero</string>
+    <string name="export">Exporter</string>
+    <string name="export_wav">Exporter en WAV</string>
+    <string name="export_flac">Exporter en FLAC</string>
+    <string name="polarity">Polarite</string>
+    <string name="overlay_mode">Superpose</string>
+    <string name="stacked_mode">Cote a cote</string>
+    <string name="decoding">Decodage en cours…</string>
+    <string name="analyzing">Analyse de correlation…</string>
+    <string name="rendering">Rendu du mixage…</string>
+</resources>

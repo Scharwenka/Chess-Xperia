@@ -1,0 +1,13 @@
+# Gradle / Android
+.gradle/
+build/
+local.properties
+*.iml
+.cxx/
+
+# Android Studio
+.idea/
+captures/
+
+# NDK
+obj/
