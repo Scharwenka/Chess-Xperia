@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#17181d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MUSIC_IDEAS">
+  <meta name="description" content="Notez vos idées musicales sur une double portée piano et exportez-les en PDF, MusicXML, MIDI, PNG, ABC, LilyPond.">
+  <title>MUSIC_IDEAS</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── Barre du haut ─────────────────────────────────────────────── -->
+  <header id="topbar">
+    <button id="btn-lib" class="icon-btn" aria-label="Mes idées">☰</button>
+    <button id="btn-title" class="title-btn" aria-label="Réglages de l'idée">
+      <span id="title-text">MUSIC_IDEAS</span>
+      <span id="title-meta"></span>
+    </button>
+    <button id="btn-undo" class="icon-btn" aria-label="Annuler">↶</button>
+    <button id="btn-redo" class="icon-btn" aria-label="Rétablir">↷</button>
+    <button id="btn-play" class="icon-btn" aria-label="Écouter">▶</button>
+    <button id="btn-export" class="icon-btn accent" aria-label="Exporter"><svg viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></svg></button>
+  </header>
+
+  <!-- ── Partition ─────────────────────────────────────────────────── -->
+  <main id="score-wrap">
+    <div id="score" aria-label="Partition : touchez la portée pour ajouter une note"></div>
+    <div id="bubble" aria-live="polite"></div>
+    <div id="hint"></div>
+  </main>
+
+  <!-- ── Palette ───────────────────────────────────────────────────── -->
+  <section id="palette">
+    <div class="row" id="row-dur"></div>
+    <div class="row" id="row-edit"></div>
+  </section>
+
+  <!-- ── Clavier ───────────────────────────────────────────────────── -->
+  <section id="keyboard-wrap">
+    <div id="kb-bar">
+      <button id="kb-down" class="kb-oct" aria-label="Octave inférieure">‹</button>
+      <span id="kb-label"></span>
+      <button id="kb-up" class="kb-oct" aria-label="Octave supérieure">›</button>
+    </div>
+    <div id="keyboard"></div>
+  </section>
+
+  <!-- ── Feuilles (bibliothèque, réglages, export) ─────────────────── -->
+  <div id="sheet-backdrop"></div>
+
+  <section class="sheet" id="sheet-lib" aria-label="Mes idées">
+    <div class="sheet-head"><h2>Mes idées</h2><button class="close" aria-label="Fermer">✕</button></div>
+    <div class="sheet-actions">
+      <button id="lib-new" class="primary">＋ Nouvelle idée</button>
+      <button id="lib-import">Importer…</button>
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
+    </div>
+    <ul id="lib-list"></ul>
+  </section>
+
+  <section class="sheet" id="sheet-settings" aria-label="Réglages">
+    <div class="sheet-head"><h2>Réglages de l'idée</h2><button class="close" aria-label="Fermer">✕</button></div>
+    <label class="field">Titre<input id="set-title" type="text" maxlength="120" autocomplete="off"></label>
+    <div class="field-row">
+      <label class="field">Tempo (bpm)<input id="set-tempo" type="number" min="20" max="300" inputmode="numeric"></label>
+      <label class="field">Mesure<select id="set-ts"></select></label>
+    </div>
+    <label class="field">Armure<select id="set-key"></select></label>
+    <h3>Affichage</h3>
+    <div class="field-row">
+      <label class="field">Taille de la portée<input id="set-zoom" type="range" min="6" max="16" step="0.5"></label>
+    </div>
+    <label class="check"><input id="set-sound" type="checkbox"> Entendre les notes saisies</label>
+    <label class="check"><input id="set-kbd" type="checkbox"> Afficher le clavier de piano</label>
+    <div class="sheet-actions">
+      <button id="set-help">Aide</button>
+      <button id="set-clear" class="danger">Effacer les notes</button>
+    </div>
+  </section>
+
+  <section class="sheet" id="sheet-export" aria-label="Exporter">
+    <div class="sheet-head"><h2>Exporter</h2><button class="close" aria-label="Fermer">✕</button></div>
+    <div class="seg" id="exp-mode" role="radiogroup">
+      <button data-mode="download" role="radio">⤓ Télécharger</button>
+      <button data-mode="share" role="radio">↗ Partager</button>
+    </div>
+    <div id="exp-grid"></div>
+    <button id="exp-zip" class="primary wide">Tout exporter (.zip — 8 formats)</button>
+  </section>
+
+  <section class="sheet" id="sheet-help" aria-label="Aide">
+    <div class="sheet-head"><h2>Comment ça marche</h2><button class="close" aria-label="Fermer">✕</button></div>
+    <ul class="help">
+      <li><b>Toucher la portée</b> : pose une note à la hauteur touchée, dans la portée touchée (clé de sol ou de fa).</li>
+      <li><b>Maintenir puis glisser</b> : la note suit le doigt, son nom s'affiche ; relâcher pour la poser.</li>
+      <li><b>Toucher une note</b> existante : la sélectionne (orange). Durée, point, altération, ▲▼ s'appliquent à elle.</li>
+      <li><b>Clavier de piano</b> : joue dans la portée active (bouton 𝄞/𝄢). Plusieurs doigts en même temps = accord.</li>
+      <li><b>Accord</b> : quand il est activé, les notes suivantes s'empilent sur la note courante.</li>
+      <li><b>▲ ▼</b> : monte/descend la note d'un degré ; appui long = une octave.</li>
+      <li><b>◀ ▶</b> : déplacent le curseur pour insérer au milieu.</li>
+      <li>Les barres de mesure se placent toutes seules ; une note trop longue est coupée et liée.</li>
+      <li><b>Exporter</b> (bouton orange) : un seul toucher par format (PDF, MusicXML, MIDI, PNG, SVG, ABC, LilyPond, projet) ou tout en .zip.</li>
+      <li>Tout est enregistré automatiquement sur le téléphone, même hors connexion.</li>
+    </ul>
+  </section>
+
+  <div id="toast" role="status"></div>
+
+  <script src="js/glyphs.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/exporters.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
